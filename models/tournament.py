@@ -3,22 +3,34 @@ from mysql.connector import Error
 
 
 class Tournament:
-    def __init__(self, tournament_id=None, name=None, description=None, organizer_id=None) -> None:
+    def __init__(
+        self, tournament_id=None, name=None, description=None, organizer_id=None
+    ) -> None:
         self.tournament_id = tournament_id
         self.name = name
         self.description = description
         self.organizer_id = organizer_id
 
+    def __repr__(self):
+        return f"Tournament(id={self.tournament_id}, name='{self.name}')"
+
     @staticmethod
-    def create(tournament_id, name, description, organizer_id):
+    def create(name, description, organizer_id):
         sql = """
-        INSERT INTO Tournaments (tournament_id, name, description, organizer_id)
-        VALUES (%s,%s,%s,%s)
+        INSERT INTO Tournaments (name, description, organizer_id)
+        VALUES (%s,%s,%s)
         """
         try:
             with Database() as db:
-                db.execute(sql, (tournament_id, name, description, organizer_id))
-            return True
+                db.execute(sql, (name, description, organizer_id))
+                tournament_id = db.cursor.lastrowid
+            return Tournament(
+                tournament_id=tournament_id,
+                name=name,
+                description=description,
+                organizer_id=organizer_id,
+            )
+
         except Error as e:
             print(f"Database error while creating Tournament: {e}")
             return False

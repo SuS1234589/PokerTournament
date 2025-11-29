@@ -12,14 +12,18 @@ class Player:
         self.status = player_status
 
     @staticmethod
-    def create(player_id, name, email, status):
+    def create(name, email, status):
         sql = """
-        INSERT INTO Players (player_id, name, psu_email, status)
-        VALUES (%s,%s,%s,%s)
+        INSERT INTO Players (name, psu_email, status)
+        VALUES (%s,%s,%s)
         """
         try:
             with Database() as db:
-                db.execute(sql, (player_id, name, email, status))
+                db.execute(sql, (name, email, status))
+                player_id = db.cursor.lastrowid
+            return Player(
+                player_id=player_id, player_name=name, player_email=email, player_status=status
+            )
             return True
         except Error as e:
             print(f"Database error while creating player: {e}")
