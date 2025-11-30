@@ -26,6 +26,7 @@ class Registration:
         return Tournament.get_by_id(self.registered_tournament_id)
 
     @staticmethod
+    # This function is to register players. should change the name and variable names to make it easier
     def create(
         registered_player_id, registered_tournament_id, buyin_amount, registered_status
     ):
@@ -58,9 +59,9 @@ class Registration:
 
     @staticmethod
     def get_by_id(r_id):
-        "All players who are registered"
+        """Gets a single registration entry by its ID."""
         sql = """
-        SELECT player_id FROM Registration WHERE registeration_id=%s 
+        SELECT * FROM Registration WHERE registration_id=%s 
         """
         try:
             with Database() as db:
@@ -69,7 +70,7 @@ class Registration:
                 return Registration(**row)
             return None
         except Error as e:
-            print(f"Database error while getting Registered by ID: {e}")
+            print(f"Database error while getting registration by ID: {e}")
             return None
 
     @staticmethod
@@ -82,6 +83,23 @@ class Registration:
         except Error as e:
             print(f"Database error while getting all Registration: {e}")
             return []
+
+    @staticmethod
+    def get_by_player_and_tournament(r_id, t_id):
+        sql = """
+        SELECT * FROM Registration
+        WHERE registered_player_id = %s AND registered_tournament_id = %s
+        """
+        try:
+            with Database() as db:
+                row = db.fetchone(sql, (r_id, t_id))
+            if row:
+                return Registration(**row)
+        except Error as e:
+            print(
+                f"Database error while getting registration from player and tournament: {e}"
+            )
+            return False
 
     def update(self):
         sql = """
@@ -101,7 +119,7 @@ class Registration:
                         self.registration_id,
                     ),
                 )
-            return True
+                return True
         except Error as e:
             print(f"Database error while updating registration: {e}")
             return False
@@ -129,5 +147,5 @@ class Registration:
                 )
                 return True
         except Error as e:
-            print(f"Databse error while deleting registered player")
+            print(f"Database error while deleting registered player: {e}")
             return False

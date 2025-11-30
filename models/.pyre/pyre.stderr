@@ -494,3 +494,282 @@ Traceback (most recent call last):
   File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/backend_arguments.py", line 379, in get_source_path
     raise configuration_module.InvalidConfiguration(
 pyre_check.client.configuration.exceptions.InvalidConfiguration: Invalid configuration: Cannot find any source files to analyze. Either `source_directories` or `targets` must be specified.
+2025-11-30 16:30:55,654 [PID 67291] DEBUG Using selector: KqueueSelector
+2025-11-30 16:30:55,656 [PID 67291] INFO Reading Pyre server configurations...
+2025-11-30 16:30:55,659 [PID 67291] ERROR Uncaught error in persistent.run
+Traceback (most recent call last):
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/persistent.py", line 302, in run
+    return asyncio.get_event_loop().run_until_complete(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/persistent.py", line 225, in run_persistent
+    initial_server_options = pyre_server_options.read_server_options(
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 130, in read_server_options
+    return server_options_reader()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 115, in read
+    return PyreServerOptions.create(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 95, in create
+    start_arguments = start.create_server_arguments(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/start.py", line 316, in create_server_arguments
+    source_paths = backend_arguments.get_source_path_for_server(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/backend_arguments.py", line 398, in get_source_path_for_server
+    return get_source_path(configuration, artifact_root_name, flavor, watchman_root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/backend_arguments.py", line 379, in get_source_path
+    raise configuration_module.InvalidConfiguration(
+pyre_check.client.configuration.exceptions.InvalidConfiguration: Invalid configuration: Cannot find any source files to analyze. Either `source_directories` or `targets` must be specified.
+2025-11-30 16:35:09,671 [PID 67529] DEBUG Using selector: KqueueSelector
+2025-11-30 16:35:09,672 [PID 67529] INFO Reading Pyre server configurations...
+2025-11-30 16:35:09,675 [PID 67529] ERROR Uncaught error in persistent.run
+Traceback (most recent call last):
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/persistent.py", line 302, in run
+    return asyncio.get_event_loop().run_until_complete(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/persistent.py", line 225, in run_persistent
+    initial_server_options = pyre_server_options.read_server_options(
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 130, in read_server_options
+    return server_options_reader()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 115, in read
+    return PyreServerOptions.create(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 95, in create
+    start_arguments = start.create_server_arguments(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/start.py", line 316, in create_server_arguments
+    source_paths = backend_arguments.get_source_path_for_server(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/backend_arguments.py", line 398, in get_source_path_for_server
+    return get_source_path(configuration, artifact_root_name, flavor, watchman_root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/backend_arguments.py", line 379, in get_source_path
+    raise configuration_module.InvalidConfiguration(
+pyre_check.client.configuration.exceptions.InvalidConfiguration: Invalid configuration: Cannot find any source files to analyze. Either `source_directories` or `targets` must be specified.
+2025-11-30 16:36:45,000 [PID 68041] DEBUG Using selector: KqueueSelector
+2025-11-30 16:36:45,001 [PID 68041] INFO Reading Pyre server configurations...
+2025-11-30 16:36:45,004 [PID 68041] ERROR Uncaught error in persistent.run
+Traceback (most recent call last):
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/persistent.py", line 302, in run
+    return asyncio.get_event_loop().run_until_complete(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/persistent.py", line 225, in run_persistent
+    initial_server_options = pyre_server_options.read_server_options(
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 130, in read_server_options
+    return server_options_reader()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 115, in read
+    return PyreServerOptions.create(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 95, in create
+    start_arguments = start.create_server_arguments(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/start.py", line 316, in create_server_arguments
+    source_paths = backend_arguments.get_source_path_for_server(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/backend_arguments.py", line 398, in get_source_path_for_server
+    return get_source_path(configuration, artifact_root_name, flavor, watchman_root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/backend_arguments.py", line 379, in get_source_path
+    raise configuration_module.InvalidConfiguration(
+pyre_check.client.configuration.exceptions.InvalidConfiguration: Invalid configuration: Cannot find any source files to analyze. Either `source_directories` or `targets` must be specified.
+2025-11-30 16:42:02,215 [PID 68257] DEBUG Using selector: KqueueSelector
+2025-11-30 16:42:02,217 [PID 68257] INFO Reading Pyre server configurations...
+2025-11-30 16:42:02,223 [PID 68257] ERROR Uncaught error in persistent.run
+Traceback (most recent call last):
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/persistent.py", line 302, in run
+    return asyncio.get_event_loop().run_until_complete(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/persistent.py", line 225, in run_persistent
+    initial_server_options = pyre_server_options.read_server_options(
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 130, in read_server_options
+    return server_options_reader()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 115, in read
+    return PyreServerOptions.create(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 95, in create
+    start_arguments = start.create_server_arguments(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/start.py", line 316, in create_server_arguments
+    source_paths = backend_arguments.get_source_path_for_server(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/backend_arguments.py", line 398, in get_source_path_for_server
+    return get_source_path(configuration, artifact_root_name, flavor, watchman_root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/backend_arguments.py", line 379, in get_source_path
+    raise configuration_module.InvalidConfiguration(
+pyre_check.client.configuration.exceptions.InvalidConfiguration: Invalid configuration: Cannot find any source files to analyze. Either `source_directories` or `targets` must be specified.
+2025-11-30 17:13:09,563 [PID 69837] DEBUG Using selector: KqueueSelector
+2025-11-30 17:13:09,567 [PID 69837] INFO Reading Pyre server configurations...
+2025-11-30 17:13:09,573 [PID 69837] ERROR Uncaught error in persistent.run
+Traceback (most recent call last):
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/persistent.py", line 302, in run
+    return asyncio.get_event_loop().run_until_complete(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/persistent.py", line 225, in run_persistent
+    initial_server_options = pyre_server_options.read_server_options(
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 130, in read_server_options
+    return server_options_reader()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 115, in read
+    return PyreServerOptions.create(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 95, in create
+    start_arguments = start.create_server_arguments(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/start.py", line 316, in create_server_arguments
+    source_paths = backend_arguments.get_source_path_for_server(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/backend_arguments.py", line 398, in get_source_path_for_server
+    return get_source_path(configuration, artifact_root_name, flavor, watchman_root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/backend_arguments.py", line 379, in get_source_path
+    raise configuration_module.InvalidConfiguration(
+pyre_check.client.configuration.exceptions.InvalidConfiguration: Invalid configuration: Cannot find any source files to analyze. Either `source_directories` or `targets` must be specified.
+2025-11-30 17:13:34,599 [PID 69981] DEBUG Using selector: KqueueSelector
+2025-11-30 17:13:34,600 [PID 69981] INFO Reading Pyre server configurations...
+2025-11-30 17:13:34,603 [PID 69981] ERROR Uncaught error in persistent.run
+Traceback (most recent call last):
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/persistent.py", line 302, in run
+    return asyncio.get_event_loop().run_until_complete(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/persistent.py", line 225, in run_persistent
+    initial_server_options = pyre_server_options.read_server_options(
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 130, in read_server_options
+    return server_options_reader()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 115, in read
+    return PyreServerOptions.create(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 95, in create
+    start_arguments = start.create_server_arguments(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/start.py", line 316, in create_server_arguments
+    source_paths = backend_arguments.get_source_path_for_server(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/backend_arguments.py", line 398, in get_source_path_for_server
+    return get_source_path(configuration, artifact_root_name, flavor, watchman_root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/backend_arguments.py", line 379, in get_source_path
+    raise configuration_module.InvalidConfiguration(
+pyre_check.client.configuration.exceptions.InvalidConfiguration: Invalid configuration: Cannot find any source files to analyze. Either `source_directories` or `targets` must be specified.
+2025-11-30 17:14:01,619 [PID 70147] DEBUG Using selector: KqueueSelector
+2025-11-30 17:14:01,620 [PID 70147] INFO Reading Pyre server configurations...
+2025-11-30 17:14:01,622 [PID 70147] ERROR Uncaught error in persistent.run
+Traceback (most recent call last):
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/persistent.py", line 302, in run
+    return asyncio.get_event_loop().run_until_complete(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/persistent.py", line 225, in run_persistent
+    initial_server_options = pyre_server_options.read_server_options(
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 130, in read_server_options
+    return server_options_reader()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 115, in read
+    return PyreServerOptions.create(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 95, in create
+    start_arguments = start.create_server_arguments(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/start.py", line 316, in create_server_arguments
+    source_paths = backend_arguments.get_source_path_for_server(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/backend_arguments.py", line 398, in get_source_path_for_server
+    return get_source_path(configuration, artifact_root_name, flavor, watchman_root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/backend_arguments.py", line 379, in get_source_path
+    raise configuration_module.InvalidConfiguration(
+pyre_check.client.configuration.exceptions.InvalidConfiguration: Invalid configuration: Cannot find any source files to analyze. Either `source_directories` or `targets` must be specified.
+2025-11-30 17:52:36,988 [PID 71725] DEBUG Using selector: KqueueSelector
+2025-11-30 17:52:36,990 [PID 71725] INFO Reading Pyre server configurations...
+2025-11-30 17:52:36,993 [PID 71725] ERROR Uncaught error in persistent.run
+Traceback (most recent call last):
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/persistent.py", line 302, in run
+    return asyncio.get_event_loop().run_until_complete(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/persistent.py", line 225, in run_persistent
+    initial_server_options = pyre_server_options.read_server_options(
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 130, in read_server_options
+    return server_options_reader()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 115, in read
+    return PyreServerOptions.create(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 95, in create
+    start_arguments = start.create_server_arguments(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/start.py", line 316, in create_server_arguments
+    source_paths = backend_arguments.get_source_path_for_server(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/backend_arguments.py", line 398, in get_source_path_for_server
+    return get_source_path(configuration, artifact_root_name, flavor, watchman_root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/backend_arguments.py", line 379, in get_source_path
+    raise configuration_module.InvalidConfiguration(
+pyre_check.client.configuration.exceptions.InvalidConfiguration: Invalid configuration: Cannot find any source files to analyze. Either `source_directories` or `targets` must be specified.
+2025-11-30 18:01:10,833 [PID 72051] DEBUG Using selector: KqueueSelector
+2025-11-30 18:01:10,837 [PID 72051] INFO Reading Pyre server configurations...
+2025-11-30 18:01:10,839 [PID 72051] ERROR Uncaught error in persistent.run
+Traceback (most recent call last):
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/persistent.py", line 302, in run
+    return asyncio.get_event_loop().run_until_complete(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/persistent.py", line 225, in run_persistent
+    initial_server_options = pyre_server_options.read_server_options(
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 130, in read_server_options
+    return server_options_reader()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 115, in read
+    return PyreServerOptions.create(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/pyre_server_options.py", line 95, in create
+    start_arguments = start.create_server_arguments(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/commands/start.py", line 316, in create_server_arguments
+    source_paths = backend_arguments.get_source_path_for_server(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/backend_arguments.py", line 398, in get_source_path_for_server
+    return get_source_path(configuration, artifact_root_name, flavor, watchman_root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ehsaasmittal/.local/share/nvim/mason/packages/pyre/venv/lib/python3.11/site-packages/pyre_check/client/backend_arguments.py", line 379, in get_source_path
+    raise configuration_module.InvalidConfiguration(
+pyre_check.client.configuration.exceptions.InvalidConfiguration: Invalid configuration: Cannot find any source files to analyze. Either `source_directories` or `targets` must be specified.

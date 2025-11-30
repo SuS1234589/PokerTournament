@@ -22,9 +22,11 @@ class Player:
                 db.execute(sql, (name, email, status))
                 player_id = db.cursor.lastrowid
             return Player(
-                player_id=player_id, player_name=name, player_email=email, player_status=status
+                player_id=player_id,
+                player_name=name,
+                player_email=email,
+                player_status=status,
             )
-            return True
         except Error as e:
             print(f"Database error while creating player: {e}")
             return False
@@ -62,7 +64,7 @@ class Player:
         try:
             with Database() as db:
                 db.execute(sql, (self.name, self.email, self.status, self.id))
-            return True
+                return True
         except Error as e:
             print(f"Database error while updating player: {e}")
             return False
@@ -72,7 +74,7 @@ class Player:
         try:
             with Database() as db:
                 db.execute(sql, (self.id,))
-            return True
+                return True
         except Error as e:
             print(f"Database error while deleting player: {e}")
             return False

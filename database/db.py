@@ -1,5 +1,5 @@
 # database/db.py
-# CHANGE PASSWORD 
+# CHANGE PASSWORD
 import mysql.connector
 import os
 

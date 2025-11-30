@@ -43,7 +43,6 @@ class Tournament:
                 row = db.fetchone(sql, (tournament_id,))
             if row:
                 return Tournament(**row)
-            return None
         except Error as e:
             print(f"Database error while getting tournament by ID: {e}")
             return None
@@ -86,7 +85,7 @@ class Tournament:
         try:
             with Database() as db:
                 db.execute(sql, (self.tournament_id,))
-            return True
+                return True
         except Error as e:
             print(f"Database error while deleting the Tournament: {e}")
             return False
