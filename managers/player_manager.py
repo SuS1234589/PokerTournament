@@ -1,7 +1,7 @@
 from models.player import Player 
 
-def add_player(id, name, email, status):
-    Player.create(id, name, email, status)
+def add_player(name, email, status):
+    Player.create(name, email, status)
 
 def view_players():
     return Player.get_all() 
