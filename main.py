@@ -1,65 +1,114 @@
 import sys
-# Import your specific manager functions
+import time
+import os
+
+# Import Admin Logic
 from managers.player_manager import add_player, view_players, remove_player
-from managers.tournament_manager import (
-    create_tournament, 
-    register_player, 
-    list_registered_players,
-    remove_player_from_tournament
-)
+from managers.tournament_manager import create_tournament, register_player, list_registered_players, remove_player_from_tournament
 
-def print_menu():
-    print("\n--- POKER TOURNAMENT SYSTEM ---")
-    print("1. Create New Player")
-    print("2. View All Players")
-    print("3. Delete Player")
-    print("4. Create Tournament")
-    print("5. Register Player for Tournament")
-    print("6. View Registrations")
-    print("7. Remove Player from Tournament")
-    print("8. Exit")
-    print("-------------------------------")
+# Import Player Logic
+from models.hands import run_poker_simulation
 
-def main():
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+# ==========================================
+# ADMIN INTERFACE
+# ==========================================
+def admin_portal():
     while True:
-        print_menu()
-        choice = input("Enter choice (1-8): ")
+        clear_screen()
+        print("=== ADMIN PANEL ===")
+        print("1. Add Player")
+        print("2. View Players")
+        print("3. Delete Player")
+        print("4. Create Tournament")
+        print("5. Register Player")
+        print("6. View Registrations")
+        print("7. Remove Registration")
+        print("8. Logout")
+        
+        choice = input("\nAdmin Command: ")
 
         if choice == '1':
-            name = input("Enter Name: ")
-            email = input("Enter Email: ")
+            name = input("Name: ")
+            email = input("Email: ")
             add_player(name, email, "Active")
-            print("Player added successfully.")
+            input("Saved. Press Enter...")
         
         elif choice == '2':
             players = view_players()
-            print("\n[Player List]")
+            print(f"\n{'ID':<5} {'Name':<20} {'Email'}")
+            print("-" * 40)
             for p in players:
-                print(f"ID: {p.id} | Name: {p.name} | Status: {p.status}")
+                print(f"{p.id:<5} {p.name:<20} {p.email}")
+            input("\nPress Enter...")
 
         elif choice == '3':
-            p_id = int(input("Enter Player ID to delete: "))
-            remove_player(p_id)
-            print("Player deleted (if they existed).")
-
+            pid = input("Player ID to delete: ")
+            if pid.isdigit(): remove_player(int(pid))
+        
         elif choice == '4':
             create_tournament()
-
+            input("Press Enter...")
+        
         elif choice == '5':
             register_player()
+            input("Press Enter...")
 
         elif choice == '6':
             list_registered_players()
+            input("Press Enter...")
 
         elif choice == '7':
             remove_player_from_tournament()
+            input("Press Enter...")
 
         elif choice == '8':
-            print("Goodbye!")
-            sys.exit()
-        
-        else:
-            print("Invalid choice, please try again.")
+            break
 
+# ==========================================
+# PLAYER INTERFACE
+# ==========================================
+def player_portal():
+    while True:
+        clear_screen()
+        print("=== PLAYER PORTAL ===")
+        print("1. View My Stats")
+        print("2. Sit at Table (Simulate Hand)")
+        print("3. Logout")
+
+        choice = input("\nAction: ")
+
+        if choice == '1':
+            # You could connect this to `view_player(id)` later
+            print("\nStats: 0 Wins, 500 Chips")
+            input("Press Enter...")
+        
+        elif choice == '2':
+            # This calls the logic from 'hands.py'
+            run_poker_simulation()
+        
+        elif choice == '3':
+            break
+
+# ==========================================
+# MAIN ROUTER
+# ==========================================
 if __name__ == "__main__":
-    main()
+    while True:
+        clear_screen()
+        print("Welcome to the Poker Tournament System")
+        print("1. Admin Login")
+        print("2. Player Login")
+        print("3. Quit")
+        
+        role = input("\nSelect Role: ")
+
+        if role == '1':
+            admin_portal()
+        elif role == '2':
+            player_portal()
+        elif role == '3':
+            print("Goodbye.")
+            sys.exit()
