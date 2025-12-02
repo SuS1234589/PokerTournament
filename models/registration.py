@@ -26,7 +26,6 @@ class Registration:
         return Tournament.get_by_id(self.registered_tournament_id)
 
     @staticmethod
-    # This function is to register players. should change the name and variable names to make it easier
     def create(
         registered_player_id, registered_tournament_id, buyin_amount, registered_status
     ):
@@ -46,6 +45,7 @@ class Registration:
                     ),
                 )
                 r_id = db.cursor.lastrowid
+            
             return Registration(
                 registration_id=r_id,
                 registered_player_id=registered_player_id,
@@ -60,14 +60,18 @@ class Registration:
     @staticmethod
     def get_by_id(r_id):
         """Gets a single registration entry by its ID."""
-        sql = """
-        SELECT * FROM Registration WHERE registration_id=%s 
-        """
+        sql = "SELECT * FROM Registration WHERE registration_id=%s"
         try:
             with Database() as db:
                 row = db.fetchone(sql, (r_id,))
             if row:
-                return Registration(**row)
+                return Registration(
+                    registration_id=row['registration_id'],
+                    registered_player_id=row['registered_player_id'],
+                    registered_tournament_id=row['registered_tournament_id'],
+                    buyin_amount=row['buyin_amount'],
+                    registered_status=row['registered_status']
+                )
             return None
         except Error as e:
             print(f"Database error while getting registration by ID: {e}")
@@ -79,27 +83,41 @@ class Registration:
         try:
             with Database() as db:
                 rows = db.fetchall(sql)
-            return [Registration(**row) for row in rows]
+            
+            return [
+                Registration(
+                    registration_id=row['registration_id'],
+                    registered_player_id=row['registered_player_id'],
+                    registered_tournament_id=row['registered_tournament_id'],
+                    buyin_amount=row['buyin_amount'],
+                    registered_status=row['registered_status']
+                ) for row in rows
+            ]
         except Error as e:
             print(f"Database error while getting all Registration: {e}")
             return []
 
     @staticmethod
-    def get_by_player_and_tournament(r_id, t_id):
+    def get_by_player_and_tournament(p_id, t_id):
         sql = """
         SELECT * FROM Registration
         WHERE registered_player_id = %s AND registered_tournament_id = %s
         """
         try:
             with Database() as db:
-                row = db.fetchone(sql, (r_id, t_id))
+                row = db.fetchone(sql, (p_id, t_id))
             if row:
-                return Registration(**row)
+                return Registration(
+                    registration_id=row['registration_id'],
+                    registered_player_id=row['registered_player_id'],
+                    registered_tournament_id=row['registered_tournament_id'],
+                    buyin_amount=row['buyin_amount'],
+                    registered_status=row['registered_status']
+                )
+            return None
         except Error as e:
-            print(
-                f"Database error while getting registration from player and tournament: {e}"
-            )
-            return False
+            print(f"Database error while getting registration from player and tournament: {e}")
+            return None
 
     def update(self):
         sql = """
@@ -132,20 +150,4 @@ class Registration:
                 return True
         except Error as e:
             print(f"Database error while deleting registration: {e}")
-            return False
-
-    def delete_player(self):
-        sql = """
-        DELETE FROM Registration
-        WHERE registered_player_id = %s 
-        AND registered_tournament_id = %s
-        """
-        try:
-            with Database() as db:
-                db.execute(
-                    sql, (self.registered_player_id, self.registered_tournament_id)
-                )
-                return True
-        except Error as e:
-            print(f"Database error while deleting registered player: {e}")
             return False

@@ -17,7 +17,7 @@ class Tournament:
     @staticmethod
     def create(name, description, organizer_id):
         sql = """
-        INSERT INTO Tournaments (name, description, organizer_id)
+        INSERT INTO Tournaments (name, Description, organizer_id)
         VALUES (%s,%s,%s)
         """
         try:
@@ -42,7 +42,12 @@ class Tournament:
             with Database() as db:
                 row = db.fetchone(sql, (tournament_id,))
             if row:
-                return Tournament(**row)
+                return Tournament(
+                    tournament_id=row['tournament_id'],
+                    name=row['name'],
+                    description=row['Description'],
+                    organizer_id=row['organizer_id']
+                )
         except Error as e:
             print(f"Database error while getting tournament by ID: {e}")
             return None
@@ -53,7 +58,14 @@ class Tournament:
         try:
             with Database() as db:
                 rows = db.fetchall(sql)
-            return [Tournament(**row) for row in rows]
+            return [
+                Tournament(
+                    tournament_id=row['tournament_id'],
+                    name=row['name'],
+                    description=row['Description'],
+                    organizer_id=row['organizer_id']
+                ) for row in rows
+            ]
         except Error as e:
             print(f"Database error while getting all Tournaments: {e}")
             return []
@@ -61,7 +73,7 @@ class Tournament:
     def update(self):
         sql = """
         UPDATE Tournaments
-        SET name = %s, description = %s, organizer_id = %s
+        SET name = %s, Description = %s, organizer_id = %s
         WHERE tournament_id = %s
         """
         try:
