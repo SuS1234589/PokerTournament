@@ -13,6 +13,7 @@ class Player:
 
     @staticmethod
     def create(name, email, status):
+        # ADD DUPLICATE LOGIC 
         sql = """
         INSERT INTO Players (name, psu_email, status)
         VALUES (%s,%s,%s)
