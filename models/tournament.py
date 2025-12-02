@@ -4,31 +4,42 @@ from mysql.connector import Error
 
 class Tournament:
     def __init__(
-        self, tournament_id=None, name=None, description=None, organizer_id=None
+        self,
+        tournament_id=None,
+        name=None,
+        description=None,
+        organizer_id=None,
+        starting_chips=None,
+        current_blind_level=None,
+        level_start_time=None,
     ) -> None:
         self.tournament_id = tournament_id
         self.name = name
         self.description = description
         self.organizer_id = organizer_id
+        self.starting_chips = starting_chips
+        self.current_blind_level = current_blind_level
+        self.level_start_time = level_start_time
 
     def __repr__(self):
         return f"Tournament(id={self.tournament_id}, name='{self.name}')"
 
     @staticmethod
-    def create(name, description, organizer_id):
+    def create(name, description, organizer_id, starting_chips=30000):
         sql = """
-        INSERT INTO Tournaments (name, Description, organizer_id)
-        VALUES (%s,%s,%s)
+        INSERT INTO Tournaments (name, Description, organizer_id, starting_chips)
+        VALUES (%s, %s, %s, %s)
         """
         try:
             with Database() as db:
-                db.execute(sql, (name, description, organizer_id))
+                db.execute(sql, (name, description, organizer_id, starting_chips))
                 tournament_id = db.cursor.lastrowid
             return Tournament(
                 tournament_id=tournament_id,
                 name=name,
                 description=description,
                 organizer_id=organizer_id,
+                starting_chips=starting_chips,
             )
 
         except Error as e:
@@ -43,10 +54,13 @@ class Tournament:
                 row = db.fetchone(sql, (tournament_id,))
             if row:
                 return Tournament(
-                    tournament_id=row['tournament_id'],
-                    name=row['name'],
-                    description=row['Description'],
-                    organizer_id=row['organizer_id']
+                    tournament_id=row["tournament_id"],
+                    name=row["name"],
+                    description=row["Description"],
+                    organizer_id=row["organizer_id"],
+                    starting_chips=row["starting_chips"],
+                    current_blind_level=row["current_blind_level"],
+                    level_start_time=row["level_start_time"],
                 )
         except Error as e:
             print(f"Database error while getting tournament by ID: {e}")
@@ -60,11 +74,15 @@ class Tournament:
                 rows = db.fetchall(sql)
             return [
                 Tournament(
-                    tournament_id=row['tournament_id'],
-                    name=row['name'],
-                    description=row['Description'],
-                    organizer_id=row['organizer_id']
-                ) for row in rows
+                    tournament_id=row["tournament_id"],
+                    name=row["name"],
+                    description=row["Description"],
+                    organizer_id=row["organizer_id"],
+                    starting_chips=row["starting_chips"],
+                    current_blind_level=row["current_blind_level"],
+                    level_start_time=row["level_start_time"],
+                )
+                for row in rows
             ]
         except Error as e:
             print(f"Database error while getting all Tournaments: {e}")
@@ -73,7 +91,8 @@ class Tournament:
     def update(self):
         sql = """
         UPDATE Tournaments
-        SET name = %s, Description = %s, organizer_id = %s
+        SET name = %s, Description = %s, organizer_id = %s, 
+            starting_chips = %s, current_blind_level = %s, level_start_time = %s
         WHERE tournament_id = %s
         """
         try:
@@ -84,6 +103,9 @@ class Tournament:
                         self.name,
                         self.description,
                         self.organizer_id,
+                        self.starting_chips,
+                        self.current_blind_level,
+                        self.level_start_time,
                         self.tournament_id,
                     ),
                 )

@@ -162,3 +162,23 @@ class Registration:
         except Error as e:
             print(f"Database error while deleting registration: {e}")
             return False
+
+    @staticmethod
+    def get_by_tournament(tournament_id):
+        sql = "SELECT * FROM Registration WHERE registered_tournament_id = %s"
+        try:
+            with Database() as db:
+                rows = db.fetchall(sql, (tournament_id,))
+            return [
+                Registration(
+                    registration_id=row["registration_id"],
+                    registered_player_id=row["registered_player_id"],
+                    registered_tournament_id=row["registered_tournament_id"],
+                    buyin_amount=row["buyin_amount"],
+                    registered_status=row["registered_status"],
+                )
+                for row in rows
+            ]
+        except Error as e:
+            print(f"Database error while getting Registrations by tournament: {e}")
+            return []

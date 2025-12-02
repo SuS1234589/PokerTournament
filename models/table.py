@@ -8,7 +8,7 @@ class Table:
         table_id=None,
         tournament_id=None,
         table_number=None,
-        max_seats=None,
+        max_seats=0,
         registration_status=None,
     ) -> None:
         self.table_id = table_id
@@ -95,6 +95,26 @@ class Table:
             ]
         except Error as e:
             print(f"Database error while getting all Tables: {e}")
+            return []
+
+    @staticmethod
+    def get_by_tournament(tournament_id):
+        sql = "SELECT * FROM Tables WHERE table_tournament_id = %s ORDER BY table_number"
+        try:
+            with Database() as db:
+                rows = db.fetchall(sql, (tournament_id,))
+            return [
+                Table(
+                    table_id=row["table_id"],
+                    tournament_id=row["table_tournament_id"],
+                    table_number=row["table_number"],
+                    max_seats=row["max_seats"],
+                    registration_status=row["player_registration_status"],
+                )
+                for row in rows
+            ]
+        except Error as e:
+            print(f"Database error while getting tables by tournament: {e}")
             return []
 
     @staticmethod
