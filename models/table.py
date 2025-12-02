@@ -1,6 +1,7 @@
 from database.db import Database
 from mysql.connector import Error
 
+
 class Table:
     def __init__(
         self,
@@ -20,7 +21,19 @@ class Table:
         return f"Table(id={self.table_id}, number={self.table_number})"
 
     @staticmethod
-    def create(tournament_id, table_number, max_seats, registration_status):
+    def create(tournament_id, max_seats, registration_status):
+        sql = "SELECT table_number FROM Tables WHERE table_tournament_id = %s"
+        try:
+            with Database() as db:
+                existing_tables = db.fetchall(sql, (tournament_id,))
+        except Error as e:
+            print(f"Database error while getting existing tables: {e}")
+            return False
+
+        table_number = 1
+        if existing_tables:
+            table_number = max(row["table_number"] for row in existing_tables) + 1
+
         sql = """
         INSERT INTO Tables (table_tournament_id, table_number, max_seats, player_registration_status)
         VALUES (%s, %s, %s, %s)
@@ -32,7 +45,7 @@ class Table:
                 )
                 # Capture the auto-increment ID
                 t_id = db.cursor.lastrowid
-            
+
             return Table(
                 table_id=t_id,
                 tournament_id=tournament_id,
@@ -52,11 +65,11 @@ class Table:
                 row = db.fetchone(sql, (table_id,))
             if row:
                 return Table(
-                    table_id=row['table_id'],
-                    tournament_id=row['table_tournament_id'],
-                    table_number=row['table_number'],
-                    max_seats=row['max_seats'],
-                    registration_status=row['player_registration_status']
+                    table_id=row["table_id"],
+                    tournament_id=row["table_tournament_id"],
+                    table_number=row["table_number"],
+                    max_seats=row["max_seats"],
+                    registration_status=row["player_registration_status"],
                 )
             return None
         except Error as e:
@@ -69,19 +82,33 @@ class Table:
         try:
             with Database() as db:
                 rows = db.fetchall(sql)
-            
+
             return [
                 Table(
-                    table_id=row['table_id'],
-                    tournament_id=row['table_tournament_id'],
-                    table_number=row['table_number'],
-                    max_seats=row['max_seats'],
-                    registration_status=row['player_registration_status']
-                ) for row in rows
+                    table_id=row["table_id"],
+                    tournament_id=row["table_tournament_id"],
+                    table_number=row["table_number"],
+                    max_seats=row["max_seats"],
+                    registration_status=row["player_registration_status"],
+                )
+                for row in rows
             ]
         except Error as e:
             print(f"Database error while getting all Tables: {e}")
             return []
+
+    @staticmethod
+    def get_max_seats(tour_id, tab_id):
+        sql = "SELECT max_seats FROM Tables WHERE table_tournament_id = %s AND table_id = %s"
+        try:
+            with Database() as db:
+                max_seats_row = db.fetchone(sql, (tour_id, tab_id))
+                if max_seats_row:
+                    return max_seats_row["max_seats"]
+                return None
+        except Error as e:
+            print(f"Database error while getting max_seats from Tables: {e}")
+            return None
 
     def update(self):
         sql = """
