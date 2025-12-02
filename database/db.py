@@ -9,7 +9,7 @@ class Database:
         self,
         host="localhost",
         user="root",
-        password=os.getenv("DB_PASSWORD", "admin"),
+        password='',
         database="PokerTournament",
     ):
         self.conn = mysql.connector.connect(
