@@ -8,7 +8,7 @@ class Player:
     ) -> None:
         self.id = player_id
         self.name = player_name
-        self.email = player_email  # only psu email
+        self.email = player_email
         self.status = player_status
 
     @staticmethod
@@ -38,7 +38,12 @@ class Player:
             with Database() as db:
                 row = db.fetchone(sql, (player_id,))
             if row:
-                return Player(**row)
+                return Player(
+                    player_id=row['player_id'],
+                    player_name=row['name'],
+                    player_email=row['psu_email'],
+                    player_status=row['status']
+                )
             return None
         except Error as e:
             print(f"Database error while getting player by ID: {e}")
@@ -50,7 +55,14 @@ class Player:
         try:
             with Database() as db:
                 rows = db.fetchall(sql)
-            return [Player(**row) for row in rows]
+            return [
+                Player(
+                    player_id=row['player_id'],
+                    player_name=row['name'],
+                    player_email=row['psu_email'],
+                    player_status=row['status']
+                ) for row in rows
+            ]
         except Error as e:
             print(f"Database error while getting all players: {e}")
             return []
