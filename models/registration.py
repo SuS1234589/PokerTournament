@@ -29,6 +29,14 @@ class Registration:
     def create(
         registered_player_id, registered_tournament_id, buyin_amount, registered_status
     ):
+        sql = "SELECT * FROM Registration WHERE registered_player_id = %s AND registered_tournament_id  = %s"
+        with Database() as db:
+            row = db.fetchone(sql, (registered_player_id, registered_tournament_id))
+        if row:
+            print("The player is already registered")
+            return False
+        # the above checks whether the player has been registered or not
+
         sql = """
         INSERT INTO Registration(registered_player_id, registered_tournament_id, buyin_amount, registered_status)
         VALUES (%s,%s,%s,%s)
@@ -45,7 +53,7 @@ class Registration:
                     ),
                 )
                 r_id = db.cursor.lastrowid
-            
+
             return Registration(
                 registration_id=r_id,
                 registered_player_id=registered_player_id,
@@ -66,11 +74,11 @@ class Registration:
                 row = db.fetchone(sql, (r_id,))
             if row:
                 return Registration(
-                    registration_id=row['registration_id'],
-                    registered_player_id=row['registered_player_id'],
-                    registered_tournament_id=row['registered_tournament_id'],
-                    buyin_amount=row['buyin_amount'],
-                    registered_status=row['registered_status']
+                    registration_id=row["registration_id"],
+                    registered_player_id=row["registered_player_id"],
+                    registered_tournament_id=row["registered_tournament_id"],
+                    buyin_amount=row["buyin_amount"],
+                    registered_status=row["registered_status"],
                 )
             return None
         except Error as e:
@@ -83,15 +91,16 @@ class Registration:
         try:
             with Database() as db:
                 rows = db.fetchall(sql)
-            
+
             return [
                 Registration(
-                    registration_id=row['registration_id'],
-                    registered_player_id=row['registered_player_id'],
-                    registered_tournament_id=row['registered_tournament_id'],
-                    buyin_amount=row['buyin_amount'],
-                    registered_status=row['registered_status']
-                ) for row in rows
+                    registration_id=row["registration_id"],
+                    registered_player_id=row["registered_player_id"],
+                    registered_tournament_id=row["registered_tournament_id"],
+                    buyin_amount=row["buyin_amount"],
+                    registered_status=row["registered_status"],
+                )
+                for row in rows
             ]
         except Error as e:
             print(f"Database error while getting all Registration: {e}")
@@ -108,15 +117,17 @@ class Registration:
                 row = db.fetchone(sql, (p_id, t_id))
             if row:
                 return Registration(
-                    registration_id=row['registration_id'],
-                    registered_player_id=row['registered_player_id'],
-                    registered_tournament_id=row['registered_tournament_id'],
-                    buyin_amount=row['buyin_amount'],
-                    registered_status=row['registered_status']
+                    registration_id=row["registration_id"],
+                    registered_player_id=row["registered_player_id"],
+                    registered_tournament_id=row["registered_tournament_id"],
+                    buyin_amount=row["buyin_amount"],
+                    registered_status=row["registered_status"],
                 )
             return None
         except Error as e:
-            print(f"Database error while getting registration from player and tournament: {e}")
+            print(
+                f"Database error while getting registration from player and tournament: {e}"
+            )
             return None
 
     def update(self):

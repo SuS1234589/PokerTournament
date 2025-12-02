@@ -13,6 +13,15 @@ class Player:
 
     @staticmethod
     def create(name, email, status):
+        # ADD DUPLICATE LOGIC
+        sql = "SELECT * FROM Players WHERE psu_email = %s"
+        with Database() as db:
+            row = db.fetchone(sql, (email,))
+        if row:
+            print(f"The player {email} has already been added.")
+            return False
+
+        # if row is not None then the player is already in the system 
         sql = """
         INSERT INTO Players (name, psu_email, status)
         VALUES (%s,%s,%s)
@@ -39,10 +48,10 @@ class Player:
                 row = db.fetchone(sql, (player_id,))
             if row:
                 return Player(
-                    player_id=row['player_id'],
-                    player_name=row['name'],
-                    player_email=row['psu_email'],
-                    player_status=row['status']
+                    player_id=row["player_id"],
+                    player_name=row["name"],
+                    player_email=row["psu_email"],
+                    player_status=row["status"],
                 )
             return None
         except Error as e:
@@ -57,11 +66,12 @@ class Player:
                 rows = db.fetchall(sql)
             return [
                 Player(
-                    player_id=row['player_id'],
-                    player_name=row['name'],
-                    player_email=row['psu_email'],
-                    player_status=row['status']
-                ) for row in rows
+                    player_id=row["player_id"],
+                    player_name=row["name"],
+                    player_email=row["psu_email"],
+                    player_status=row["status"],
+                )
+                for row in rows
             ]
         except Error as e:
             print(f"Database error while getting all players: {e}")
