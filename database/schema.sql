@@ -15,8 +15,6 @@ CREATE TABLE Tournaments(
 	Description VARCHAR(256), 
 	organizer_id INT, 
     starting_chips INT,
-    current_blind_level INT,
-    level_start_time DATETIME,
 	FOREIGN KEY (organizer_id) REFERENCES Players(player_id)
 );
 
@@ -103,14 +101,6 @@ CREATE TABLE Leaderboard(
 	FOREIGN KEY (leaderboard_tournament_id) REFERENCES Tournaments(tournament_id)
 );
 
-CREATE TABLE BlindLevels(
-    level_id INT AUTO_INCREMENT PRIMARY KEY,
-    tournament_id INT,
-    level_number INT,
-    small_blind INT,
-    big_blind INT,
-    duration_minutes INT,
-    FOREIGN KEY (tournament_id) REFERENCES Tournaments(tournament_id)
-);
+
 
 

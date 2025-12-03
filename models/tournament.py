@@ -10,16 +10,12 @@ class Tournament:
         description=None,
         organizer_id=None,
         starting_chips=None,
-        current_blind_level=None,
-        level_start_time=None,
     ) -> None:
         self.tournament_id = tournament_id
         self.name = name
         self.description = description
         self.organizer_id = organizer_id
         self.starting_chips = starting_chips
-        self.current_blind_level = current_blind_level
-        self.level_start_time = level_start_time
 
     def __repr__(self):
         return f"Tournament(id={self.tournament_id}, name='{self.name}')"
@@ -59,8 +55,6 @@ class Tournament:
                     description=row["Description"],
                     organizer_id=row["organizer_id"],
                     starting_chips=row["starting_chips"],
-                    current_blind_level=row["current_blind_level"],
-                    level_start_time=row["level_start_time"],
                 )
         except Error as e:
             print(f"Database error while getting tournament by ID: {e}")
@@ -79,8 +73,6 @@ class Tournament:
                     description=row["Description"],
                     organizer_id=row["organizer_id"],
                     starting_chips=row["starting_chips"],
-                    current_blind_level=row["current_blind_level"],
-                    level_start_time=row["level_start_time"],
                 )
                 for row in rows
             ]
@@ -92,7 +84,7 @@ class Tournament:
         sql = """
         UPDATE Tournaments
         SET name = %s, Description = %s, organizer_id = %s, 
-            starting_chips = %s, current_blind_level = %s, level_start_time = %s
+            starting_chips = %s
         WHERE tournament_id = %s
         """
         try:
@@ -104,8 +96,6 @@ class Tournament:
                         self.description,
                         self.organizer_id,
                         self.starting_chips,
-                        self.current_blind_level,
-                        self.level_start_time,
                         self.tournament_id,
                     ),
                 )
