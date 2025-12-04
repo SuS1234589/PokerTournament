@@ -101,6 +101,41 @@ CREATE TABLE Leaderboard(
 	FOREIGN KEY (leaderboard_tournament_id) REFERENCES Tournaments(tournament_id)
 );
 
+-- Sample Data Injection
 
+-- 1. Create Players
+INSERT INTO Players (name, psu_email, status) VALUES 
+('Lucas', 'lucas@psu.edu', 'Active'),
+('Ehsaas', 'sus@psu.edu', 'Active'),
+('James', 'james@psu.edu', 'Active');
 
+-- 2. Create a Tournament (Organized by Lucas)
+INSERT INTO Tournaments (name, Description, organizer_id) VALUES 
+('PSU Friday Night', 'Weekly main event', 1);
+
+-- 3. Register Players (Buyin: 500)
+INSERT INTO Registration (registered_player_id, registered_tournament_id, buyin_amount, registered_status) VALUES 
+(1, 1, 500.00, 'Registered'),
+(2, 1, 500.00, 'Registered'),
+(3, 1, 500.00, 'Registered');
+
+-- 4. Create a Table (Table 1)
+INSERT INTO Tables (table_tournament_id, table_number, max_seats, player_registration_status) VALUES 
+(1, 1, 6, 'Open');
+
+-- 5. Seat the Players
+INSERT INTO SeatingAssignments (seating_tournament_id, seating_table_id, seating_player_id, seat_number) VALUES 
+(1, 1, 1, 1),
+(1, 1, 2, 2),
+(1, 1, 3, 3); 
+
+-- 6. Initialize Player Chip Stacks (Starting with 1000)
+INSERT INTO Chips (chip_player_id, chip_tournament_id, chip_balance) VALUES 
+(1, 1, 1000),
+(2, 1, 1000),
+(3, 1, 1000);
+
+-- 7. Start a Dummy Game (Hand #1)
+INSERT INTO Games (game_tournament_id, game_table_id, hand_number, dealer_seat_number, pot_amount) VALUES 
+(1, 1, 1, 1, 75.00); -- Dealer at Seat 1, Pot 75 (Blinds 25/50)
 
