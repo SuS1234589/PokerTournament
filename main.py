@@ -14,6 +14,7 @@ from managers.tournament_manager import (
 )
 from models.table import Table 
 from models.hands import run_poker_simulation
+from managers.table_manager import create_table, list_tables_by_tournament, delete_table, view_seats_at_table
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -117,27 +118,36 @@ def menu_admin_tables():
         print_header("ADMIN > TABLES")
         options = {
             '1': 'Create New Table',
-            '2': 'Assign Seat (Force Sit)',
+            '2': 'View Tables (by Tournament)',
+            '3': 'Delete Table',
+            '4': 'Assign Seat (Force Sit)',
+            '5': 'View Seated Players at Table'
         }
         choice = get_menu_choice(options)
 
         if choice == '1':
-            print("--- Create Table ---")
-            t_id = input("Tournament ID: ")
-            t_num = input("Table Number (e.g. 1): ")
-            seats = input("Max Seats (default 9): ") or "9"
-            
-            if Table.create(t_id, t_num, seats, "Open"):
-                print(f"Table {t_num} created for Tournament {t_id}.")
+            create_table()
             pause()
         
         elif choice == '2':
+            list_tables_by_tournament()
+            pause()
+
+        elif choice == '3':
+            delete_table()
+            pause()
+        
+        elif choice == '4':
             print("--- Assign Seat ---")
             tour_id = input("Tournament ID: ")
             tab_id = input("Table ID: ")
             p_id = input("Player ID: ")
             seat = input("Seat Number: ")
             assign_seat(tour_id, tab_id, p_id, seat)
+            pause()
+
+        elif choice == '5':
+            view_seats_at_table()
             pause()
 
         elif choice == 'B': return

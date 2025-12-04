@@ -154,11 +154,56 @@ class Table:
             return False
 
     def delete(self):
-        sql = "DELETE FROM Tables WHERE table_id = %s"
+        cleanup_queries = [
+            """DELETE ga FROM GameActions ga 
+            JOIN Games g ON ga.game_action_game_id = g.game_id 
+            WHERE g.game_table_id = %s""",
+            "DELETE FROM Games WHERE game_table_id = %s",
+            "DELETE FROM SeatingAssignments WHERE seating_table_id = %s",
+            "DELETE FROM Tables WHERE table_id = %s"
+        ]
+        
         try:
             with Database() as db:
-                db.execute(sql, (self.table_id,))
+                for sql in cleanup_queries:
+                    db.execute(sql, (self.table_id,))
                 return True
         except Error as e:
             print(f"Database error while deleting Table: {e}")
             return False
+
+    @staticmethod
+    def get_by_tournament_id(tournament_id):
+        sql = "SELECT * FROM Tables WHERE table_tournament_id = %s ORDER BY table_number ASC"
+        try:
+            with Database() as db:
+                rows = db.fetchall(sql, (tournament_id,))
+            return [
+                Table(
+                    table_id=row['table_id'],
+                    tournament_id=row['table_tournament_id'],
+                    table_number=row['table_number'],
+                    max_seats=row['max_seats'],
+                    registration_status=row['player_registration_status']
+                ) for row in rows
+            ]
+        except Error as e:
+            print(f"Database error while getting tournament tables: {e}")
+            return []
+        
+    @staticmethod
+    def get_seated_players(table_id):
+        sql = """
+        SELECT s.seat_number, p.player_id, p.name, p.psu_email
+        FROM SeatingAssignments s
+        JOIN Players p ON s.seating_player_id = p.player_id
+        WHERE s.seating_table_id = %s
+        ORDER BY s.seat_number ASC
+        """
+        try:
+            with Database() as db:
+                rows = db.fetchall(sql, (table_id,))
+            return rows 
+        except Error as e:
+            print(f"Database error while getting seated players: {e}")
+            return []
