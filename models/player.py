@@ -92,11 +92,21 @@ class Player:
             return False
 
     def delete(self):
-        sql = "DELETE FROM Players WHERE player_id = %s"
+        cleanup_queries = [
+            "DELETE FROM Chips WHERE chip_player_id = %s",
+            "DELETE FROM SeatingAssignments WHERE seating_player_id = %s",
+            "DELETE FROM GameActions WHERE game_player_id = %s",
+            "DELETE FROM Registration WHERE registered_player_id = %s",
+            "DELETE FROM Players WHERE player_id = %s"
+        ]
+        
         try:
             with Database() as db:
-                db.execute(sql, (self.id,))
+                for sql in cleanup_queries:
+                    db.execute(sql, (self.id,))
                 return True
         except Error as e:
             print(f"Database error while deleting player: {e}")
+            if "tournaments_ibfk" in str(e):
+                print("This player is an Organizer of a Tournament. Delete the Tournament first.")
             return False
