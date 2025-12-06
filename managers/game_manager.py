@@ -3,6 +3,7 @@ from models import chip
 from models.game import Game
 from models.game_action import GameAction
 from models.chip import Chip
+from models.player import Player
 from models.seating_assignment import SeatingAssignment
 from models.elimination import Elimination
 
@@ -26,8 +27,7 @@ def start_new_hand(tournament_id, table_id):
         print(f"Error not enough players or something like that in game_manager.py")
         return None, [], {}
 
-    seated_players = [(row.player_id, row.seat_number)
-                      for row in players_on_table]
+    seated_players = [(row.player_id, row.seat_number) for row in players_on_table]
     num_players = len(seated_players)
 
     seated_players.sort(key=lambda x: x[1])
@@ -53,15 +53,13 @@ def start_new_hand(tournament_id, table_id):
     else:
         new_hand_number = 1
 
-    game = Game.create(tournament_id, table_id,
-                       new_hand_number, new_dealer_seat_number)
+    game = Game.create(tournament_id, table_id, new_hand_number, new_dealer_seat_number)
     if not game:
         print(f"Error: Failed to create a new game record.")
         return None, [], {}
 
     print(f"\n---Starting Hand #{new_hand_number} at Table {table_id}")
-    print(
-        f"Dealer is player {new_dealer_player_id} in seat {new_dealer_seat_number}")
+    print(f"Dealer is player {new_dealer_player_id} in seat {new_dealer_seat_number}")
 
     if num_players == 2:
         small_bid_index = new_dealer_index
@@ -92,8 +90,7 @@ def start_new_hand(tournament_id, table_id):
         )
 
     big_bid_player_id, big_bid_seat_number = seated_players[big_bid_index]
-    big_bid_chips = Chip.get_by_player_and_tournament(
-        big_bid_player_id, tournament_id)
+    big_bid_chips = Chip.get_by_player_and_tournament(big_bid_player_id, tournament_id)
     if big_bid_chips and big_bid_chips.chip_balance > 0:
         chips_posted = min(BIG_BLIND_AMOUNT, big_bid_chips.chip_balance)
         big_bid_chips.chip_balance -= chips_posted
@@ -191,8 +188,7 @@ def run_betting_round(game: Game, players, stage, tournament_id):
 
         print(f"Your Chips: {player_chips.chip_balance}")
 
-        action = input(
-            "Action (check (c), call (p), raise (r), fold (f)): ").lower()
+        action = input("Action (check (c), call (p), raise (r), fold (f)): ").lower()
 
         if action.lower() == "f" or action.lower() == "fold":
             active_players.remove(current_player_id)
@@ -206,8 +202,7 @@ def run_betting_round(game: Game, players, stage, tournament_id):
                 )
                 continue
             else:
-                GameAction.create(
-                    game.game_id, current_player_id, "check", 0, 0)
+                GameAction.create(game.game_id, current_player_id, "check", 0, 0)
                 print(f"Player {current_player_id} checks")
 
         elif action.lower() == "p" or action.lower() == "call":
@@ -260,8 +255,7 @@ def run_betting_round(game: Game, players, stage, tournament_id):
                 GameAction.create(
                     game.game_id, current_player_id, "raise", raise_amount, amount
                 )
-                print(
-                    f"Player {current_player_id} raises the bet to {raise_amount}")
+                print(f"Player {current_player_id} raises the bet to {raise_amount}")
             except ValueError:
                 print("Invalid amount ")
                 continue
@@ -285,15 +279,15 @@ def deal_community_cards(deck: Deck, community_list, stage):
 
 
 def determine_winner(game, active_players, hole_cards, community_cards):
-    best_score = float('inf')
+    best_score = float("inf")
     winners = []
     community_deuces = []
     for card in community_cards:
-        rank_string = "T" if card.rank == '10' else card.rank
+        rank_string = "T" if card.rank == "10" else card.rank
         card_string_d = rank_string + card.suit_char.lower()
         community_deuces.append(Card.new(card_string_d))
 
-    print(f"\n---SHOWDOWN---")
+    print(f"\n---SHOWDOWN---")  # i wanna sleep what is this deuce
 
     for player_id in active_players:
         player_hole_cards = hole_cards[player_id]
@@ -304,13 +298,16 @@ def determine_winner(game, active_players, hole_cards, community_cards):
             card_string_d = rank_string + card.suit_char.lower()
             hole_d.append(Card.new(card_string_d))
 
+        # lower the score the better, remember that!
         score = evaluator.evaluate(hole_d + community_deuces)
+        # yo this thing is cool as hell
         rank_class = evaluator.get_rank_class(score)
         rank_name = evaluator.class_to_string(rank_class)
 
         hold_card_string = [str(i) for i in player_hole_cards]
         print(
-            f"Player {player_id} shows {hold_card_string} for a {rank_name} Score:{score}")
+            f"Player {player_id} shows {hold_card_string} for a {rank_name} Score:{score}"
+        )
         if score < best_score:
             best_score = score
             # only winner, chicken dinnner
@@ -326,4 +323,20 @@ def determine_winner(game, active_players, hole_cards, community_cards):
 
 
 def check_for_eliminations(table_id):
-    pass
+    # get them out of the tournament heheheheheheeh
+    all_players = SeatingAssignment.get_by_table(table_id)
+
+    if not all_players:
+        return 
+
+    for player in all_players:
+        chips = Chip.get_by_player_and_tournament(
+            player.player_id, player.tournament_id
+        )
+        if chips.chip_balance == 0:
+            player_from_player = Player.get_by_id(player.player_id) # what a shitty variable namen 
+            if player_from_player:
+                player_from_player.status = "eliminated"
+                player_from_player.update()  # DON't MAKE MISTAKES DON't FORGET TO UPDATE
+            # i actually have no idea how to track position and stuff and i do not wanna thihnk about it i might just remove it later, until unless lucas decides he wanna do leaderboard, then its his problem, for now 0 is a placeholder
+            Elimination.create(player.player_id, player.tournament_id, 1, 0)
