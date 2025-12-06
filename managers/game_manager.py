@@ -7,6 +7,9 @@ from models.seating_assignment import SeatingAssignment
 from models.elimination import Elimination
 
 from models.cards import Deck
+from deuces import Card, Evaluator
+
+evaluator = Evaluator()
 
 SMALL_BLIND_AMOUNT = 25
 BIG_BLIND_AMOUNT = 50
@@ -106,7 +109,7 @@ def start_new_hand(tournament_id, table_id):
     game.pot_amount = initial_pot
     game.update()
 
-    deck = Deck()
+    deck = Deck
     hole_cards = {}
     print(f"DEALING CARD!!!!!!!!!!!!")
     for player_id, seat_number in seated_players:
@@ -156,7 +159,10 @@ def run_betting_round(game: Game, players, stage, tournament_id):
         if last_raiser and current_player_id == last_raiser:
             action_closed = True
         else:
-            if current_player_index == first_player_to_act_index and last_raiser is None:
+            if (
+                current_player_index == first_player_to_act_index
+                and last_raiser is None
+            ):
                 action_closed = True
         if action_closed:
             all_bets_equal = True
@@ -223,7 +229,7 @@ def run_betting_round(game: Game, players, stage, tournament_id):
                 current_player_id,
                 "call",
                 player_bets[current_player_id],
-                amount_to_bet
+                amount_to_bet,
             )
             print(f"Player{current_player_id} calls {amount_to_bet}")
 
@@ -266,12 +272,57 @@ def run_betting_round(game: Game, players, stage, tournament_id):
             break
 
 
-def deal_community_cards(stage):
-    pass
+def deal_community_cards(deck: Deck, community_list, stage):
+    deck.deal()
+    if stage.lower() == "flop":
+        for _ in range(3):
+            community_list.append(deck.deal())
+    elif stage.lower() == "turn" or stage.lower() == "river":
+        community_list.append(deck.deal())
+    else:
+        print(f"Unkown stage")
+    return community_list
 
 
 def determine_winner(game, active_players, hole_cards, community_cards):
-    pass
+    best_score = float('inf')
+    winners = []
+    community_deuces = []
+    for card in community_cards:
+        rank_string = "T" if card.rank == '10' else card.rank
+        card_string_d = rank_string + card.suit_char.lower()
+        community_deuces.append(Card.new(card_string_d))
+
+    print(f"\n---SHOWDOWN---")
+
+    for player_id in active_players:
+        player_hole_cards = hole_cards[player_id]
+
+        hole_d = []
+        for card in player_hole_cards:
+            rank_string = "T" if card.rank == "10" else card.rank
+            card_string_d = rank_string + card.suit_char.lower()
+            hole_d.append(Card.new(card_string_d))
+
+        score = evaluator.evaluate(hole_d + community_deuces)
+        rank_class = evaluator.get_rank_class(score)
+        rank_name = evaluator.class_to_string(rank_class)
+
+        hold_card_string = [str(i) for i in player_hole_cards]
+        print(
+            f"Player {player_id} shows {hold_card_string} for a {rank_name} Score:{score}")
+        if score < best_score:
+            best_score = score
+            # only winner, chicken dinnner
+            winners = [player_id]
+        elif score == best_score:
+            # not the only winner, no dinnner
+            winners.append(player_id)
+    rank_class = evaluator.get_rank_class(best_score)
+    rank_name = evaluator.class_to_string(rank_class)
+
+    print(f" Winner: {winners} with a {rank_name}! ")
+    return winners
 
 
 def check_for_eliminations(table_id):
