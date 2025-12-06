@@ -6,52 +6,17 @@ from models.chip import Chip
 from models.seating_assignment import SeatingAssignment
 from models.elimination import Elimination
 
-from models.cards import Deck  # Using the existing Deck class
-import random
+from models.cards import Deck
 
 SMALL_BLIND_AMOUNT = 25
 BIG_BLIND_AMOUNT = 50
 
 
 def run_full_hand(tournament_id, table_id):
-    """
-    This is the main orchestrator. It calls all the other helper functions
-    to run a complete hand from start to finish.
-    """
-    # 1. Setup the hand (this returns the new game object and other state)
-    #    game, players, hole_cards = start_new_hand(tournament_id, table_id)
-    #    if not game: print("Failed to start new hand.")
-    #        return
-
-    # 2. Run the first betting round (Pre-Flop)
-    #    active_players = run_betting_round(game, players, 'pre-flop')
-
-    # 3. If more than one player remains, proceed with community cards
-    #    if len(active_players) > 1:
-    #        community_cards = deal_community_cards('flop')
-    #        active_players = run_betting_round(game, active_players, 'flop')
-
-    #    if len(active_players) > 1:
-    #        community_cards.extend(deal_community_cards('turn'))
-    #        active_players = run_betting_round(game, active_players, 'turn')
-
-    #    if len(active_players) > 1:
-    #        community_cards.extend(deal_community_cards('river'))
-    #        active_players = run_betting_round(game, active_players, 'river')
-
-    # 4. Determine the winner and distribute the pot
-    #    determine_winner(game, active_players, hole_cards, community_cards)
-
-    # 5. Check for and handle any player eliminations
-    #    check_for_eliminations(table_id)
     pass
 
 
 def start_new_hand(tournament_id, table_id):
-    """
-    Sets up a new hand: determines dealer, collects blinds, deals cards.
-    Returns the new game object, a list of player objects, and their hole cards.
-    """
     initial_pot = 0
     players_on_table = SeatingAssignment.get_by_table(table_id)
     if not players_on_table or len(players_on_table) < 2:
@@ -147,53 +112,16 @@ def start_new_hand(tournament_id, table_id):
 
 
 def run_betting_round(game, players, stage):
-    """
-    Manages a single round of betting.
-    Returns a list of players still active in the hand (who haven't folded).
-    """
-    # 1. DETERMINE ACTION ORDER: Based on the `stage` ('pre-flop', etc.) and
-    #    the dealer position, create an ordered list of players to act.
-
-    # 2. LOOP FOR ACTIONS: Loop through the players, getting a simulated action
-    #    for each (e.g., `random.choice(['fold', 'call', 'bet'])`).
-
-    # 3. PROCESS ACTION: Based on the action, update chip balances in memory,
-    #    update the pot amount in memory, and record the action with
-    #    `GameAction.create()`. Mark folded players as inactive.
-
-    # 4. SAVE & RETURN: After the round, call `game.update()` to save the new pot
-    #    size. Return the list of players who have not folded.
     pass
 
 
 def deal_community_cards(stage):
-    """
-    Deals the community cards for the flop, turn, or river.
-    (This is a placeholder for now).
-    """
     pass
 
 
 def determine_winner(game, active_players, hole_cards, community_cards):
-    """
-    Evaluates hands and awards the pot to the winner.
-    (This is a placeholder for the complex hand evaluation logic).
-    """
-    # 1. For each active player, combine their hole cards and the community cards.
-    # 2. Use a (future) hand evaluation utility to find the best 5-card hand for each.
-    # 3. Compare the hands to find the winner.
-    # 4. Get the winner's `Chip` model.
-    # 5. Add the `game.pot_amount` to their `chip_balance` and call `chip.update()`.
     pass
 
 
 def check_for_eliminations(table_id):
-    """
-    Checks all players at a table to see if any have a chip balance of 0.
-    Records an elimination if a player is out of chips.
-    """
-    # 1. Get all players at the table.
-    # 2. For each player, get their `Chip` model.
-    # 3. If `chip.chip_balance` is 0 (or less), call `Elimination.create()` to
-    #    record their finishing position.
     pass
