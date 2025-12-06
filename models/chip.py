@@ -4,7 +4,7 @@ from mysql.connector import Error
 
 class Chip:
     def __init__(
-        self, chip_id=None, chip_player_id=None, chip_tournament_id=None, chip_balance=None
+        self.chip_id=None, chip_player_id=None, chip_tournament_id=None, chip_balance=0
     ) -> None:
         self.chip_id = chip_id
         self.chip_player_id = chip_player_id

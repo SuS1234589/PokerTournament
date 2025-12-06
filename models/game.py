@@ -8,7 +8,7 @@ class Game:
         game_id=None,
         game_tournament_id=None,
         game_table_id=None,
-        hand_number=None,
+        hand_number=0,
         dealer_seat_number=None,
         pot_amount=None,
     ) -> None:
@@ -63,6 +63,28 @@ class Game:
             return None
         except Error as e:
             print(f"Database error while fetching by id: {e}")
+            return None
+
+    @staticmethod
+    def get_last_hand_for_table(table_id):
+        sql = (
+            "SELECT * FROM Games WHERE game_table_id = %s ORDER BY game_id DESC LIMIT 1"
+        )
+        try:
+            with Database() as db:
+                row = db.fetchone(sql, (table_id,))
+            if row:
+                return Game(
+                    game_id=row["game_id"],
+                    game_tournament_id=row["game_tournament_id"],
+                    game_table_id=row["game_table_id"],
+                    hand_number=row["hand_number"],
+                    dealer_seat_number=row["dealer_seat_number"],
+                    pot_amount=row["pot_amount"],
+                )
+            return None
+        except Error as e:
+            print(f"Database error while fetching hand by table id in game: {e}")
             return None
 
     def update(self):

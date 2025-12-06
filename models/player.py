@@ -100,6 +100,7 @@ class Player:
         except Error as e:
             print(f"Error: Could not delete player with ID {self.id}.")
             print(
-                "This is likely because the player is still referenced in other tables.")
-            print(f"Original database error: {e}")  
+                "This is likely because the player is still referenced in other tables."
+            )
+            print(f"Original database error: {e}")
             return False
